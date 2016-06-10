@@ -48,11 +48,16 @@ bool Board::LookAround(int row, int col, int _linelenght){
   return false;
 }
 
+void Board::SetTurn(int _turn){
+  turn = _turn;
+}
+
 void Board::SetKeepPlaying (bool keep){
   keepplaying = keep;
 }
+
 void Board::ResetBoard() {
-  turn = 0;
+  turn = -1;
   end = false;
   keepplaying = true;
   matrix = Matrix(GetRows(),GetCols());

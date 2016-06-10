@@ -10,6 +10,8 @@
     cin.ignore();
     return board;
   }
+
+  
   void BoardIO::PrintBoard (const Board& board, ostream& os) const {
     os << endl << endl <<"╔";
 
@@ -72,7 +74,9 @@
       if(selection[0] == 'S' || selection[0] == 's'){
 
         SaveGame(selection+5, board, player1, player2);
+        board.SetTurn(board.GetTurn()-1);
         return -2;
+
       }//IF
 
     } // ELSE
@@ -87,6 +91,7 @@
     char answer;
     cout << endl << "Do you want to keep playing? Y/N   ";
     cin >> answer;
+    cin.ignore();
     return (answer == 'Y' || answer == 'y');
   }
 
@@ -106,6 +111,7 @@
     ifstream f(filename,ifstream::in);
     if(f){
       f >> board >> player1 >> player2;
+      board.SetTurn(board.GetTurn()-1);
     }else{
       cerr << "File couldnt be opened" << endl;
       f.setstate(ios::failbit);

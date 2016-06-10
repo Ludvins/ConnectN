@@ -17,7 +17,7 @@ class Board {
 
 public:
 
-  Board(int _rows = 0, int _cols = 0, int _linelenght = 0, int _tokkens = 0) :matrix(_rows, _cols), linelenght(_linelenght), turn(0), end(false), keepplaying(true), tokkens(_tokkens)  {  }
+  Board(int _rows = 0, int _cols = 0, int _linelenght = 0, int _tokkens = 0) :matrix(_rows, _cols), linelenght(_linelenght), turn(-1), end(false), keepplaying(true), tokkens(_tokkens)  {  }
   Board(const Board& board);
 
   int GetRows() const {return matrix.GetRows();}
@@ -32,6 +32,7 @@ public:
   int GetTurn() const { return turn;}
   bool WannaKeepPlaying() const { return keepplaying; }
 
+  void SetTurn(int _Turn);
   void SetTokkens(int _tokkens);
   void Nextturn (){ turn++; }
 

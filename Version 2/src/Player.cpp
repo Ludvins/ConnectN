@@ -1,20 +1,21 @@
 
 #include "Player.h"
 
-Player::Player() :wongames(0), points(0){
+Player::Player() :wongames(0), points(0), isAI(0){
   name = new char [20];
   for (int i = 0; i<20; i++) name[i] = '0';
 }
 
-Player::Player(char* _name) :wongames(0), points(0){
+Player::Player(char* _name) :wongames(0), points(0), isAI(0){
   name = new char [strlen(_name)+1];
   for (int i = 0; i<strlen(_name)+1; i++){
      name[i] = _name[i];
    }
+   if(name[0] == '@') isAI = true;
 }
 
  ostream& operator<< (ostream& os, const Player& p){
-  os << p.name << endl << p.wongames << " " << p.points << " ";
+  os << p.name << endl << p.wongames << " " << p.points << " " << p.isAI << " ";
   return os;
 }
 
@@ -23,7 +24,7 @@ Player::Player(char* _name) :wongames(0), points(0){
    is.getline(aux,100,'\n');
    Player p2(aux);
    p = p2;
-   is >> p.wongames >> p.points;
+   is >> p.wongames >> p.points >> p.isAI;
    return is;
 }
 
@@ -36,9 +37,16 @@ Player::Player(char* _name) :wongames(0), points(0){
     }
    wongames = p.wongames;
    points = p.points;
+   isAI = p.isAI;
    return *this;
    }
 
+ bool Player::operator== (const Player& p){
+
+    return (name == p.name && wongames == p.wongames && points == p.points &&  isAI == p.isAI);
+
+  }
+  
 
   int Player::AI(const Board& board) const{
     cout << "AI's Turn." << endl;
@@ -75,6 +83,8 @@ Player::Player(char* _name) :wongames(0), points(0){
             value[i] += (j+2)*(j+2);
           }
         } // FOR
+
+              //This Part of the code doesn't work properly.
         /*
         for(int k = 0; k < aux2.GetCols(); k++){ //Traverse the columns in the next turn, so you can see how the oponent could take advantage of your choice.
 
@@ -114,11 +124,12 @@ Player::Player(char* _name) :wongames(0), points(0){
 
     for (int k = 0; k < board.GetCols(); k++){
 
-      if(value[max] == value[k] && k != max){
+      if(value[max] == value[k] && k != max){ //If there are more than one movement with max points.
          max2[j] = k;
          j++;
        }
-    }
+    }//FOR
+
     srand (time(NULL));
     int c = max2[rand() % j];
 

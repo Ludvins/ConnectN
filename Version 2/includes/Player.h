@@ -12,6 +12,7 @@ class Player{
   char* name;
   int wongames;
   int points;
+  bool isAI;
 
 public:
 
@@ -24,6 +25,7 @@ public:
 
   const char* GetName() const { return name;}
 
+  bool GetAI() const { return isAI;}
   int GetPoints() const { return points; }
   int GetGames() const { return wongames; }
 
@@ -31,6 +33,8 @@ public:
   friend istream& operator>> (istream& is, Player& p);
 
   Player& operator= (const Player& p);
+
+  bool operator== (const Player& p);
 
   int AI(const Board& board) const;
 
